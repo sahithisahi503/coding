@@ -1,0 +1,41 @@
+//A
+#include <bits/stdc++.h>
+using namespace std;
+struct act{
+    int start;
+    int end;
+};
+bool compare(const act& a, const act& b) {
+    return a.end < b.end;
+}
+int max(vector<act>& activities) {
+    sort(activities.begin(), activities.end(), compare);
+
+    int max = 0;
+    int lastEnd = -1;
+
+    for (const act& activity : activities) {
+        if (activity.start >= lastEnd) {
+            max++;
+            lastEnd = activity.end;
+        }
+    }
+
+    return max;
+}
+
+int main() {
+    int T;
+    cin >> T;
+
+    for (int t = 0; t < T; t++) {
+        int N;
+        cin >> N;
+        vector<act> activities(N);
+        for (int i = 0; i < N; i++) {
+            cin >> activities[i].start >> activities[i].end;
+        }
+        cout << max(activities) << endl;
+    }
+    return 0;
+}//
