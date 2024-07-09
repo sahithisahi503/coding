@@ -1,0 +1,60 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+class TreeNode{
+public:
+    int data;
+    TreeNode*left;
+    TreeNode*right;
+    TreeNode(int val):data(val),left(nullptr),right(nullptr){}
+};
+class BinarySearchTreeChecker{
+private:
+    TreeNode*root;
+    TreeNode*buildTreeFromCompleteArray(int arr[],int idx,int n){
+        if(idx>n){
+            return nullptr;
+        }
+        TreeNode*node=new TreeNode(arr[idx-1]);
+        node->left=buildTreeFromCompleteArray(arr,2*idx,n);
+        node->right=buildTreeFromCompleteArray(arr,2*idx+1,n);
+        return node;
+    }
+    bool isBSTUtil(TreeNode*node,int min_val,int max_val){
+        if (node==nullptr){
+            return true;
+        }
+        if (node->data<=min_val||node->data>=max_val){
+            return false;
+        }
+        return isBSTUtil(node->left,min_val,node->data)&&isBSTUtil(node->right,node->data,max_val);
+    }
+public:
+    BinarySearchTreeChecker():root(nullptr){}
+    void buildTree(int arr[],int n){
+        root=buildTreeFromCompleteArray(arr,1,n);
+    }
+    bool isBinarySearchTree(){
+        return isBSTUtil(root,INT_MIN,INT_MAX);
+    }
+};
+int main(){
+    int T;
+    cin>>T;
+    while(T--){
+        int N;
+        cin>>N;
+        int arr[N];
+        for(int i=0;i<N;++i){
+            cin>>arr[i];
+        }
+        BinarySearchTreeChecker bstChecker;
+        bstChecker.buildTree(arr,N);
+        if(bstChecker.isBinarySearchTree()){
+            cout<<"True"<<endl;
+        } else{
+            cout<<"False"<<endl;
+        }
+    }
+    return 0;
+}
