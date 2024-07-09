@@ -1,0 +1,48 @@
+#include <iostream>
+//c
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node *lf,*rt;
+    Node(int data){
+        this->data=data;
+        this->lf=nullptr;
+        this->rt=nullptr;
+    }
+};
+Node* insert(Node *root,int data){
+    if(root==nullptr){
+        Node *n=new Node(data);
+        root=n;
+        return n;
+    }
+     if(data>root->data){
+             root->rt=insert(root->rt,data);
+             
+    }
+    else{
+        root->lf=insert(root->lf,data);
+    }
+    return root;
+}
+int hight(Node *root){
+    if(root==nullptr)
+    return 0;
+    return max(hight(root->lf),hight(root->rt))+1;
+}
+int main() {
+  int t;
+  cin>>t;
+  while(t--){
+      Node* root=NULL;
+      int n;
+      cin>>n;
+      for(int i=0;i<n;i++){
+          int a;cin>>a;
+          root=insert(root,a);
+      }
+      int h=hight(root);
+      cout<<h-1<<endl;
+  }
+}
