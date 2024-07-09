@@ -1,0 +1,49 @@
+//d program
+    #include<bits/stdc++.h>
+    #include <stdlib.h>
+    
+    #include <iostream>
+    
+    using namespace std;
+    struct Node {
+      public:
+      int val;
+      Node* left;
+      Node* right;
+      Node(int val):  val(val) , left(nullptr) , right(NULL){}
+    };
+     Node* insert(Node* root,int data,int d){
+         if(root==NULL){
+             cout<<d<<" ";
+             return new Node(data);
+         }
+         if(data>root->val){
+             root->right=insert(root->right,data,d+1);
+             
+         }
+         else{
+             root->left=insert(root->left,data,d+1);
+         }
+         return root;
+     }
+    
+    int main() {
+        int t;
+        cin>>t;
+        while(t--){
+            int n;
+            cin>>n;
+            Node* root=NULL;
+          vector<int>v(n);
+          for(int i=0;i<n;i++){
+              cin>>v[i];
+          }
+          for(int i=0;i<n;i++){
+              root=insert(root,v[i],0);
+          }
+          cout<<endl;
+          root=NULL;
+       
+        }
+        
+    }
